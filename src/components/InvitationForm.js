@@ -5,7 +5,8 @@ import axios from "axios";
 import {useState} from "react";
 
 export default function InvitationForm(props) {
-    const [failure, setFailure] = useState("");
+    const [failureResponse, setFailureResponse] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -37,18 +38,18 @@ export default function InvitationForm(props) {
             return errors;
         },
         onSubmit: (data) => {
-            submit(data)
-
-            // formik.resetForm();
+            requestInvitation(data)
         }
     });
 
     const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
+
     const getFormErrorMessage = (name) => {
-        return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
+        return isFormFieldValid(name) && <small className="p-error mt-1">{formik.errors[name]}</small>;
     };
 
-    const submit = (data) => {
+    const requestInvitation = (data) => {
+        setLoading(true);
         axios.post("https://us-central1-blinkapp-684c1.cloudfunctions.net/fakeAuth",
             {
                 name: data.name,
@@ -56,48 +57,37 @@ export default function InvitationForm(props) {
             }
         ).then(res => {
             if (res.status === 200) {
-                props.success();
+                props.inviteSent();
             }
         }).catch(err => {
-            setFailure(err.message)
-        })
+            setFailureResponse(err.message)
+        }).finally(() => setLoading(false));
     };
 
     return (
-        <div className="flex flex-column gap-4">
-            <div className="flex gap-3">
-                <div className="text-xl">
-                    Request an invite
-                </div>
-                <Button onClick={props.close}>
-                    <i className="pi pi-times" ></i>
-                </Button>
-            </div>
+        <div>
             <form className="flex flex-column gap-3" onSubmit={formik.handleSubmit}>
-
-                <div className="flex flex-column">
+                <div className="flex flex-column justify-content-center">
                     <InputText placeholder="Full Name" id="name" name="name" value={formik.values.name} onChange={formik.handleChange}/>
                     {getFormErrorMessage('name')}
                 </div>
-
-                <div className="flex flex-column">
+                <div className="flex flex-column justify-content-center">
                     <InputText placeholder="Email" id="email" name="email" value={formik.values.email} onChange={formik.handleChange}/>
                     {getFormErrorMessage('email')}
                 </div>
-
                 <div className="flex flex-column">
                     <InputText placeholder="Confirm Email" id="confirmEmail" name="confirmEmail" value={formik.values.confirmEmail} onChange={formik.handleChange}/>
                     {getFormErrorMessage('confirmEmail')}
                 </div>
-
-                <Button type="submit">
-                    <div className="text-xs">
-                        Send
-                    </div>
-                </Button>
-
-                {failure &&
-                    <small className="p-error">{failure}</small>
+                <div className="flex justify-content-center">
+                    <Button type="submit" loading={loading} loadingIcon="pi pi-spin pi-spinner mr-1" className="bg-blue-100 border-none w-3 justify-content-center">
+                        <div className="text-xs">
+                            Send
+                        </div>
+                    </Button>
+                </div>
+                {failureResponse &&
+                    <small className="p-error text-center">{failureResponse}</small>
                 }
             </form>
         </div>

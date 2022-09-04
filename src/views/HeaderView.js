@@ -1,12 +1,10 @@
-export default function HeaderView() {
+export default function HeaderView(props) {
     return (
         <div
-            className="flex justify-content-start block bg-primary font-bold text-center"
-            style={{minHeight: '10%'}}
+            className="flex justify-content-start block bg-white font-bold text-center"
+            style={{minHeight: props.height}}
         >
-            <div
-                className="flex align-items-center text-color-secondary ml-6"
-            >
+            <div className="flex align-items-center text-primary ml-6">
                 BROCCOLI & CO.
             </div>
         </div>

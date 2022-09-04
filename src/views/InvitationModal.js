@@ -1,27 +1,32 @@
 import {Dialog} from "primereact/dialog";
 import {useState} from "react";
-import InvitationForm from "./InvitationForm";
-import Success from "./Success";
+import InviteSuccessView from "./InviteSuccessView";
+import InvitationFormView from "./InvitationFormView";
 
 export default function InvitationModal(props) {
-    const [success, setSuccess] = useState(false);
+    const [invitationSuccess, setInvitationSuccess] = useState(false);
 
-    const closeSuccessHandler = () => {
+    const exitModalAfterSuccess = () => {
         props.close();
-        setSuccess(false);
+        setInvitationSuccess(false);
     }
 
-    const formHandler = () => {
-        setSuccess(true);
+    const modalContentHandler = () => {
+        setInvitationSuccess(true);
     }
 
     return (
         <div>
-            <Dialog showHeader={false} visible={props.showModal} showFooter="false" onHide={closeSuccessHandler}>
+            <Dialog
+                showHeader={false}
+                visible={props.showModal}
+                showFooter={false}
+                className="md:w-4 sm:w-8"
+            >
                 {
-                    success ?
-                       <Success close={closeSuccessHandler}/>
-                       : <InvitationForm success={formHandler} close={props.close}/>
+                    invitationSuccess ?
+                       <InviteSuccessView close={exitModalAfterSuccess}/>
+                       : <InvitationFormView success={modalContentHandler} close={props.close}/>
                 }
             </Dialog>
         </div>

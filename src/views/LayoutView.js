@@ -5,11 +5,11 @@ export default function LayoutView({ children }) {
     return (
         <div className="card">
             <div className="card-container h-screen">
-                <HeaderView/>
-                <div className="block bg-primary-reverse card" style={{minHeight: '80%', paddingTop: 104}}>
+                <HeaderView height="10%"/>
+                <div className="block bg-primary-reverse flex align-items-stretch card" style={{minHeight: '80%'}}>
                     {children}
                 </div>
-                <FooterView />
+                <FooterView height="10%"/>
             </div>
         </div>
     );
