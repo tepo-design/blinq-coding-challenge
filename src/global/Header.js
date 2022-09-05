@@ -1,4 +1,4 @@
-export default function HeaderView(props) {
+export default function Header(props) {
     return (
         <div
             className="flex justify-content-start block bg-white font-bold text-center"

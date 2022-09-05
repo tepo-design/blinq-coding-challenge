@@ -1,6 +1,6 @@
 import {Button} from "primereact/button";
 import {useState} from "react";
-import InvitationModal from "./InvitationModal";
+import InvitationModalView from "./InvitationModalView";
 
 export default function HomeView() {
     const [displayForm, setDisplayForm] = useState(false);
@@ -8,7 +8,8 @@ export default function HomeView() {
     const closeInviteModal = () => setDisplayForm(false);
 
     return (
-        <div className="flex flex-1 justify-content-center align-items-center card-container"
+        <div
+            className="flex flex-1 justify-content-center align-items-center card-container"
             style={{height: "auto"}}
         >
             <div className="card" >
@@ -19,12 +20,16 @@ export default function HomeView() {
                 <div className="text-small text-200 mb-4">
                     Be the first to know when we launch.
                 </div>
-                <Button onClick={openInviteModal} className="bg-blue-100 border-none">
+                <Button
+                    onClick={openInviteModal}
+                    className="bg-blue-100 border-none"
+                    data-testid="openModalButton"
+                >
                     <div className="text-xs text-50">
                         Request an Invite
                     </div>
                 </Button>
-                <InvitationModal showModal={displayForm} close={closeInviteModal}/>
+                <InvitationModalView showModal={displayForm} close={closeInviteModal} />
             </div>
         </div>
     );

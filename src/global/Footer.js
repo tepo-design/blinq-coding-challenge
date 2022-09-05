@@ -1,4 +1,4 @@
-export default function FooterView(props) {
+export default function Footer(props) {
     return (
         <div className="flex justify-content-center block bg-white font-bold text-center"
              style={{minHeight: props.height}}

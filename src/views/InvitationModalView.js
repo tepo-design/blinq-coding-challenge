@@ -3,7 +3,7 @@ import {useState} from "react";
 import InviteSuccessView from "./InviteSuccessView";
 import InvitationFormView from "./InvitationFormView";
 
-export default function InvitationModal(props) {
+export default function InvitationModalView(props) {
     const [invitationSuccess, setInvitationSuccess] = useState(false);
 
     const exitModalAfterSuccess = () => {
@@ -16,12 +16,11 @@ export default function InvitationModal(props) {
     }
 
     return (
-        <div>
             <Dialog
                 showHeader={false}
                 visible={props.showModal}
-                showFooter={false}
                 className="md:w-4 sm:w-8"
+                data-testid="invitationModal"
             >
                 {
                     invitationSuccess ?
@@ -29,6 +28,5 @@ export default function InvitationModal(props) {
                        : <InvitationFormView success={modalContentHandler} close={props.close}/>
                 }
             </Dialog>
-        </div>
     );
 }
